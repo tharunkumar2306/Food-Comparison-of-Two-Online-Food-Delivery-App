@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Comparison of Two Online Food Delivery App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fafafa; }
+    .swiggy-badge { background: #fc8019; color: #fff; }
+    .zomato-badge { background: #cb202d; color: #fff; }
+  </style>
+</head>
+<body class="text-slate-800 p-4 sm:p-6 md:p-10 min-h-screen flex flex-col justify-between">
+
+  <!-- HEADER -->
+  <div class="max-w-4xl mx-auto w-full text-center mb-8">
+    <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-3 py-1 rounded-full">
+      Smart Delivery Deal Finder
+    </span>
+    <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-2">
+      Food Comparison of Two Online Food Delivery App
+    </h1>
+    <p class="text-slate-500 text-sm mt-1">
+      Compare foods across delivery apps by <strong>Rating</strong>, <strong>Price</strong>, and <strong>Taste-wise</strong>.
+    </p>
+
+    <!-- QUICK PRESETS -->
+    <div class="flex flex-wrap justify-center gap-2 mt-4 text-xs font-semibold">
+      <button onclick="loadPreset(0)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-amber-400 rounded-full shadow-sm">
+        🍗 Biryani: Swiggy vs Zomato
+      </button>
+      <button onclick="loadPreset(1)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-amber-400 rounded-full shadow-sm">
+        🍕 Pizza: Swiggy vs Zomato
+      </button>
+      <button onclick="loadPreset(2)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-amber-400 rounded-full shadow-sm">
+        🍛 Butter Chicken: Zomato vs Swiggy
+      </button>
+      <button onclick="loadPreset(3)" class="px-3 py-1.5 bg-white border border-slate-200 hover:border-amber-400 rounded-full shadow-sm">
+        🍔 Burger: Swiggy vs Zomato
+      </button>
+    </div>
+  </div>
+
+  <!-- COMPARISON FORM & CONTENDERS -->
+  <div class="max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    
+    <!-- APP 1 CONTENDER -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative">
+      <div class="flex items-center justify-between mb-3">
+        <select id="app1-name" onchange="compare()" class="text-xs font-bold px-2 py-1 rounded-md swiggy-badge border-none outline-none">
+          <option value="Swiggy">Swiggy</option>
+          <option value="Zomato">Zomato</option>
+          <option value="UberEats">UberEats</option>
+        </select>
+        <span class="text-xs text-slate-400">Contender 1</span>
+      </div>
+      
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="text-slate-500 font-semibold block mb-1">Food Item Name</label>
+          <input id="food1-name" type="text" value="Dum Mutton Biryani" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-bold text-slate-800 text-sm">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">Item Price (₹)</label>
+            <input id="food1-price" type="number" value="380" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-slate-800 text-sm">
+          </div>
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">Delivery Fee (₹)</label>
+            <input id="food1-delivery" type="number" value="35" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-slate-800 text-sm">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">App Rating (★ 0-5)</label>
+            <input id="food1-rating" type="number" step="0.1" value="4.6" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-amber-600 text-sm">
+          </div>
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">Taste Score (0-10)</label>
+            <input id="food1-taste" type="number" step="0.1" value="9.4" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-emerald-600 text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="text-slate-500 font-semibold block mb-1">Delivery Time</label>
+          <input id="food1-time" type="text" value="30 mins" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg text-slate-700 text-xs">
+        </div>
+      </div>
+    </div>
+
+    <!-- APP 2 CONTENDER -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative">
+      <div class="flex items-center justify-between mb-3">
+        <select id="app2-name" onchange="compare()" class="text-xs font-bold px-2 py-1 rounded-md zomato-badge border-none outline-none">
+          <option value="Zomato">Zomato</option>
+          <option value="Swiggy">Swiggy</option>
+          <option value="UberEats">UberEats</option>
+        </select>
+        <span class="text-xs text-slate-400">Contender 2</span>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="text-slate-500 font-semibold block mb-1">Food Item Name</label>
+          <input id="food2-name" type="text" value="Dum Mutton Biryani" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-bold text-slate-800 text-sm">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">Item Price (₹)</label>
+            <input id="food2-price" type="number" value="340" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-slate-800 text-sm">
+          </div>
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">Delivery Fee (₹)</label>
+            <input id="food2-delivery" type="number" value="45" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-slate-800 text-sm">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">App Rating (★ 0-5)</label>
+            <input id="food2-rating" type="number" step="0.1" value="4.3" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-amber-600 text-sm">
+          </div>
+          <div>
+            <label class="text-slate-500 font-semibold block mb-1">Taste Score (0-10)</label>
+            <input id="food2-taste" type="number" step="0.1" value="8.9" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg font-mono font-bold text-emerald-600 text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="text-slate-500 font-semibold block mb-1">Delivery Time</label>
+          <input id="food2-time" type="text" value="45 mins" oninput="compare()" class="w-full p-2 border border-slate-200 rounded-lg text-slate-700 text-xs">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOWDOWN WINNER PILLARS: TASTE, PRICE, RATING -->
+  <div class="max-w-4xl mx-auto w-full mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="winner-pillars">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
+  <!-- HEAD-TO-HEAD MATRIX & VERDICT -->
+  <div class="max-w-4xl mx-auto w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-8">
+    <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center text-xs font-bold text-slate-700">
+      <span>Direct Food Delivery Metric Comparison</span>
+      <span class="text-emerald-600">Green = Advantage</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs" id="matrix-table">
+        <!-- Injected by JS -->
+      </table>
+    </div>
+    
+    <!-- RECOMMENDATION VERDICT BANNER -->
+    <div id="verdict-banner" class="p-5 bg-slate-900 text-white text-xs leading-relaxed">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="max-w-4xl mx-auto w-full text-center text-xs text-slate-400 py-4 border-t border-slate-200">
+    Food Comparison of Two Online Food Delivery App • Desktop App Ready
+  </footer>
+
+  <!-- MINIMAL COMPACT JAVASCRIPT (SHORT CODE) -->
+  <script>
+    const presets = [
+      { app1: "Swiggy", f1: "Dum Mutton Biryani", p1: 380, d1: 35, r1: 4.6, t1: 9.4, tm1: "30 mins", app2: "Zomato", f2: "Dum Mutton Biryani", p2: 340, d2: 45, r2: 4.3, t2: 8.9, tm2: "45 mins" },
+      { app1: "Swiggy", f1: "Farmhouse Cheese Pizza", p1: 450, d1: 25, r1: 4.7, t1: 9.2, tm1: "25 mins", app2: "Zomato", f2: "Farmhouse Cheese Pizza", p2: 490, d2: 0, r2: 4.8, t2: 9.5, tm2: "35 mins" },
+      { app1: "Zomato", f1: "Butter Chicken (Boneless)", p1: 360, d1: 30, r1: 4.8, t1: 9.6, tm1: "35 mins", app2: "Swiggy", f2: "Butter Chicken (Boneless)", p2: 320, d2: 40, r2: 4.4, t2: 9.0, tm2: "28 mins" },
+      { app1: "Swiggy", f1: "Crispy Chicken Double Burger", p1: 220, d1: 20, r1: 4.5, t1: 8.8, tm1: "20 mins", app2: "Zomato", f2: "Crispy Chicken Double Burger", p2: 260, d2: 15, r2: 4.6, t2: 9.1, tm2: "30 mins" }
+    ];
+
+    function loadPreset(idx) {
+      const p = presets[idx];
+      document.getElementById("app1-name").value = p.app1;
+      document.getElementById("food1-name").value = p.f1;
+      document.getElementById("food1-price").value = p.p1;
+      document.getElementById("food1-delivery").value = p.d1;
+      document.getElementById("food1-rating").value = p.r1;
+      document.getElementById("food1-taste").value = p.t1;
+      document.getElementById("food1-time").value = p.tm1;
+
+      document.getElementById("app2-name").value = p.app2;
+      document.getElementById("food2-name").value = p.f2;
+      document.getElementById("food2-price").value = p.p2;
+      document.getElementById("food2-delivery").value = p.d2;
+      document.getElementById("food2-rating").value = p.r2;
+      document.getElementById("food2-taste").value = p.t2;
+      document.getElementById("food2-time").value = p.tm2;
+      compare();
+    }
+
+    function compare() {
+      const a1 = document.getElementById("app1-name").value;
+      const f1 = document.getElementById("food1-name").value;
+      const p1 = parseFloat(document.getElementById("food1-price").value) || 0;
+      const d1 = parseFloat(document.getElementById("food1-delivery").value) || 0;
+      const r1 = parseFloat(document.getElementById("food1-rating").value) || 0;
+      const t1 = parseFloat(document.getElementById("food1-taste").value) || 0;
+      const tm1 = document.getElementById("food1-time").value;
+      const tot1 = p1 + d1;
+
+      const a2 = document.getElementById("app2-name").value;
+      const f2 = document.getElementById("food2-name").value;
+      const p2 = parseFloat(document.getElementById("food2-price").value) || 0;
+      const d2 = parseFloat(document.getElementById("food2-delivery").value) || 0;
+      const r2 = parseFloat(document.getElementById("food2-rating").value) || 0;
+      const t2 = parseFloat(document.getElementById("food2-taste").value) || 0;
+      const tm2 = document.getElementById("food2-time").value;
+      const tot2 = p2 + d2;
+
+      // 1. Taste-wise Winner
+      const tasteWin = t1 > t2 ? 1 : t2 > t1 ? 2 : 0;
+      const tasteDelta = Math.abs(t1 - t2).toFixed(1);
+
+      // 2. Price-wise Winner (Lower Total Payable)
+      const priceWin = tot1 < tot2 ? 1 : tot2 < tot1 ? 2 : 0;
+      const priceSave = Math.abs(tot1 - tot2);
+
+      // 3. Rating-wise Winner
+      const rateWin = r1 > r2 ? 1 : r2 > r1 ? 2 : 0;
+      const rateDelta = Math.abs(r1 - r2).toFixed(1);
+
+      // Render 3 Pillars
+      document.getElementById("winner-pillars").innerHTML = `
+        <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl">
+          <span class="text-[10px] font-bold text-amber-800 uppercase block mb-1">👅 Taste-Wise Winner</span>
+          <h3 class="font-extrabold text-slate-900 text-sm">${tasteWin === 1 ? a1 + ' (' + f1 + ')' : tasteWin === 2 ? a2 + ' (' + f2 + ')' : 'Equal Taste'}</h3>
+          <p class="text-[11px] text-amber-900 mt-1">Lead: <strong>+${tasteDelta} pts</strong> on flavor execution (${Math.max(t1, t2)}/10)</p>
+        </div>
+
+        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl">
+          <span class="text-[10px] font-bold text-emerald-800 uppercase block mb-1">💰 Price-Wise Winner</span>
+          <h3 class="font-extrabold text-slate-900 text-sm">${priceWin === 1 ? a1 + ' (₹' + tot1 + ' total)' : priceWin === 2 ? a2 + ' (₹' + tot2 + ' total)' : 'Same Total Cost'}</h3>
+          <p class="text-[11px] text-emerald-900 mt-1">You save <strong>₹${priceSave}</strong> (Food + Delivery included)</p>
+        </div>
+
+        <div class="p-4 bg-sky-50 border border-sky-200 rounded-2xl">
+          <span class="text-[10px] font-bold text-sky-800 uppercase block mb-1">⭐ Rating-Wise Winner</span>
+          <h3 class="font-extrabold text-slate-900 text-sm">${rateWin === 1 ? a1 + ' (' + r1 + '★)' : rateWin === 2 ? a2 + ' (' + r2 + '★)' : 'Same Rating'}</h3>
+          <p class="text-[11px] text-sky-900 mt-1">Higher diner satisfaction by <strong>+${rateDelta}★ stars</strong></p>
+        </div>
+      `;
+
+      // Render Spec Table
+      document.getElementById("matrix-table").innerHTML = `
+        <thead class="bg-slate-100 text-slate-600 font-bold">
+          <tr>
+            <th class="p-3">Comparison Metric</th>
+            <th class="p-3 text-orange-600">${a1} (${f1})</th>
+            <th class="p-3 text-red-600">${a2} (${f2})</th>
+            <th class="p-3 text-right">Advantage</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-semibold">1. Taste Score (0-10)</td>
+            <td class="p-3 font-mono font-bold ${tasteWin === 1 ? 'text-emerald-600' : ''}">${t1}/10</td>
+            <td class="p-3 font-mono font-bold ${tasteWin === 2 ? 'text-emerald-600' : ''}">${t2}/10</td>
+            <td class="p-3 text-right font-bold">${tasteWin === 1 ? '+ Taste on ' + a1 : tasteWin === 2 ? '+ Taste on ' + a2 : 'Tie'}</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-semibold">2. Food Rating (★ Stars)</td>
+            <td class="p-3 font-mono font-bold ${rateWin === 1 ? 'text-emerald-600' : ''}">${r1} ★</td>
+            <td class="p-3 font-mono font-bold ${rateWin === 2 ? 'text-emerald-600' : ''}">${r2} ★</td>
+            <td class="p-3 text-right font-bold">${rateWin === 1 ? '+ Rating on ' + a1 : rateWin === 2 ? '+ Rating on ' + a2 : 'Tie'}</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-semibold">3. Item Price (Food Only)</td>
+            <td class="p-3 font-mono">₹${p1}</td>
+            <td class="p-3 font-mono">₹${p2}</td>
+            <td class="p-3 text-right font-bold">${p1 < p2 ? '₹' + (p2 - p1) + ' cheaper item' : p2 < p1 ? '₹' + (p1 - p2) + ' cheaper item' : 'Same'}</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-semibold">4. Delivery Fee</td>
+            <td class="p-3 font-mono">₹${d1}</td>
+            <td class="p-3 font-mono">₹${d2}</td>
+            <td class="p-3 text-right font-bold">${d1 < d2 ? a1 + ' delivers cheaper' : d2 < d1 ? a2 + ' delivers cheaper' : 'Same'}</td>
+          </tr>
+          <tr class="hover:bg-slate-50 bg-amber-50/40">
+            <td class="p-3 font-bold text-slate-900">5. Total Payable Price</td>
+            <td class="p-3 font-mono font-bold text-base ${priceWin === 1 ? 'text-emerald-700' : 'text-slate-800'}">₹${tot1}</td>
+            <td class="p-3 font-mono font-bold text-base ${priceWin === 2 ? 'text-emerald-700' : 'text-slate-800'}">₹${tot2}</td>
+            <td class="p-3 text-right font-bold text-emerald-700">${priceWin === 1 ? 'Save ₹' + priceSave + ' on ' + a1 : priceWin === 2 ? 'Save ₹' + priceSave + ' on ' + a2 : 'Equal Cost'}</td>
+          </tr>
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-semibold">6. Delivery ETA</td>
+            <td class="p-3">${tm1}</td>
+            <td class="p-3">${tm2}</td>
+            <td class="p-3 text-right font-bold text-slate-500">Speed check</td>
+          </tr>
+        </tbody>
+      `;
+
+      // Render Final Verdict
+      const bestApp = (tasteWin === priceWin) && tasteWin !== 0 
+        ? (tasteWin === 1 ? a1 : a2)
+        : (priceWin === 1 ? a1 : a2);
+
+      document.getElementById("verdict-banner").innerHTML = `
+        <h4 class="font-bold text-amber-400 uppercase tracking-wider text-xs mb-1">Final Delivery App Recommendation:</h4>
+        <p class="text-slate-200">
+          • <strong>Order from ${tasteWin === 1 ? a1 : a2}</strong> if you want the <strong>best taste (${Math.max(t1, t2)}/10)</strong>.<br>
+          • <strong>Order from ${priceWin === 1 ? a1 : a2}</strong> if you want to <strong>save ₹${priceSave} (Total ₹${Math.min(tot1, tot2)})</strong>.<br>
+          • <strong>Order from ${rateWin === 1 ? a1 : a2}</strong> for the <strong>highest customer rating (${Math.max(r1, r2)}★)</strong>.
+        </p>
+      `;
+    }
+
+    // Run initial comparison on load
+    window.onload = compare;
+  </script>
+</body>
+</html>
